@@ -17,20 +17,11 @@ export default class App extends Component {
     const text = 'I am some centered text';
 
     return (
-      <View style={{ flex: 1, backgroundColor: '#eee'}}>
+      <View style={styles.container}>
         <BackgroundImage/>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'transparent',
-            marginTop:30,
-            marginLeft:20
-          }}
-        >
-
-        <TouchableOpacity>
-          {myIcon}
-
+        <View style={styles.content}>
+          <TouchableOpacity>
+            {myIcon}
           </TouchableOpacity>
           <View style={{marginTop:40}}>
             <Text style={{fontSize:18}}>Selamat Siang,</Text>
@@ -41,3 +32,16 @@ export default class App extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#eee'
+    },
+    content: {
+      flex: 1,
+      backgroundColor: 'transparent',
+      marginTop:30,
+      marginLeft:20
+    }
+});
