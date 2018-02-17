@@ -2,11 +2,17 @@ import React, { PropTypes, Component } from 'react'
 import {
   View, Text, TouchableOpacity, TouchableWithoutFeedback
 } from 'react-native'
+import { Actions } from 'react-native-router-flux'
+import { connect } from 'react-redux'
 import Modal from 'react-native-modal'
+import Icon from 'react-native-vector-icons/Ionicons';
+import _ from 'lodash'
 
+
+import { menuSetVisibility } from '../actions/sidebar'
 import styles from '../styles/sidebar'
 
-export default class MenuModal extends Component {
+class SidebarModal extends Component {
   static propTypes = {
   }
 
@@ -37,24 +43,35 @@ export default class MenuModal extends Component {
   }
 
   gotoSyncManager() {
+    this.props.hideModal()
   }
 
   gotoAutoSyncSelection() {
+    this.props.hideModal()
   }
 
 
   gotoOfflineSyncStats() {
+    Actions.offlineSyncStats()
+    this.props.hideModal()
   }
 
   gotoLogs() {
+    Actions.logs()
+    this.props.hideModal()
   }
 
   gotoEnvironmentSelection() {
+    Actions.environmentSelection()
+    this.props.hideModal()
   }
 
   render() {
-    let { visible } = this.props
+    let { visible, signedIn, logout, hideModal } = this.props
     let { showDeveloperMenu } = this.state
+    let reset = () => {
+      this.props.hideModal()
+    }
     let developerMenus = []
     if (showDeveloperMenu) {
       developerMenus.push(
@@ -84,15 +101,39 @@ export default class MenuModal extends Component {
     }
 
     let signInMenus = []
-
       signInMenus.push(
         <TouchableOpacity onPress={this.gotoSyncManager}>
-          <Text style={styles.menuModalItem}>Sync Manager</Text>
+          <View style={styles.titleContainer}>
+            <Icon name="ios-home-outline" size={30} style={{top:5}} style={{top:5}}/>
+            <Text style={[styles.menuModalItem, {marginLeft: 15}]}>Beranda</Text>
+          </View>
         </TouchableOpacity>
       )
+
       signInMenus.push(
           <TouchableOpacity onPress={this.gotoAutoSyncSelection}>
-            <Text style={styles.menuModalItem}>Auto Sync Options</Text>
+            <View style={styles.titleContainer}>
+              <Icon name="ios-download-outline" size={30} style={{top:5}}/>
+              <Text style={styles.menuModalItem}>Kotak Masuk</Text>
+            </View>
+          </TouchableOpacity>
+      )
+
+      signInMenus.push(
+          <TouchableOpacity onPress={logout}>
+            <View style={styles.titleContainer}>
+              <Icon name="ios-person-outline" size={30} style={{top:5}}/>
+              <Text style={styles.menuModalItem}>Akun Saya</Text>
+            </View>
+          </TouchableOpacity>
+      )
+
+      signInMenus.push(
+          <TouchableOpacity>
+            <View style={styles.titleContainer}>
+              <Icon name="ios-help-buoy-outline" size={30} style={{top:5}}/>
+              <Text style={[styles.menuModalItem, {marginLeft: 15}]}>Bantuan</Text>
+            </View>
           </TouchableOpacity>
       )
 
@@ -104,12 +145,11 @@ export default class MenuModal extends Component {
           animationIn='slideInLeft'
           animationOut='slideOutLeft'
           isVisible={visible}
+          onBackdropPress={hideModal}
           style={styles.menuModal}
         >
           <TouchableWithoutFeedback onPress={this.triggerDeveloperMenu}>
             <View style={styles.menuModalContainer}>
-
-              {developerMenus}
               {signInMenus}
             </View>
           </TouchableWithoutFeedback>
@@ -117,4 +157,28 @@ export default class MenuModal extends Component {
       </TouchableWithoutFeedback>
     )
   }
+
+  test() {
+    console.log('dapet');
+  }
 }
+
+
+let mapStateToProps = (state, props) => {
+  return {
+    visible: state.sidebarModal.visible,
+  }
+}
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+    hideModal: () => {
+      dispatch(menuSetVisibility(false))
+    },
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SidebarModal)

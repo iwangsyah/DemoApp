@@ -9,16 +9,22 @@ export default StyleSheet.create({
   menuModalContainer: {
     width: '75%',
     height: '100%',
-    paddingTop: 20,
+    paddingTop: 40,
     paddingBottom: 20,
-    paddingLeft: 10,
+    paddingLeft: 20,
     paddingRight: 10,
-    backgroundColor: 'red',
+    backgroundColor: 'rgba(203, 224, 229, 0.9)',
   },
   menuModalItem: {
-    color: '#FFFFFF',
+    color: '#000000',
     fontSize: 20,
-    paddingTop: 5,
-    paddingBottom: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginLeft:20
+  },
+  titleContainer: {
+    flexDirection:'row',
+    borderBottomWidth:1,
+    borderBottomColor:'rgba(160, 155, 149, 0.4)'
   }
 })

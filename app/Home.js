@@ -8,24 +8,24 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal'
+import { connect } from 'react-redux'
 
+import { menuSetVisibility } from './actions/sidebar'
 import BackgroundImage from './components/BackgroundImage'
-import SideBarModal from './components/SideBarModal'
+import SideBarModal from './components/SidebarModal'
 
 const myIcon = (<Icon name="bars" size={40} color="black" />)
 
-export default class App extends Component {
+class Home extends Component {
   render() {
-    const text = 'I am some centered text';
+    let { showMenu } = this.props;
 
     return (
       <View style={styles.container}>
         <BackgroundImage/>
         <View style={styles.content}>
-
-        <TouchableOpacity>
+          <TouchableOpacity onPress={showMenu}>
           {myIcon}
-
           </TouchableOpacity>
           <View style={{marginTop:40}}>
             <Text style={{fontSize:18}}>Selamat Siang,</Text>
@@ -37,6 +37,25 @@ export default class App extends Component {
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+  }
+}
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+    showMenu: () => {
+      dispatch(menuSetVisibility(true))
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home)
+
 
 const styles = StyleSheet.create({
     container: {
