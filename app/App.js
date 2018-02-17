@@ -7,8 +7,10 @@ import {
   Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Modal from 'react-native-modal'
 
 import BackgroundImage from './components/BackgroundImage'
+import SideBarModal from './components/SideBarModal'
 
 const myIcon = (<Icon name="bars" size={40} color="black" />)
 
@@ -20,14 +22,17 @@ export default class App extends Component {
       <View style={styles.container}>
         <BackgroundImage/>
         <View style={styles.content}>
-          <TouchableOpacity>
-            {myIcon}
+
+        <TouchableOpacity>
+          {myIcon}
+
           </TouchableOpacity>
           <View style={{marginTop:40}}>
             <Text style={{fontSize:18}}>Selamat Siang,</Text>
             <Text style={{fontSize:30}}>Catur Yundoko Edi</Text>
           </View>
         </View>
+        <SideBarModal/>
       </View>
     );
   }
