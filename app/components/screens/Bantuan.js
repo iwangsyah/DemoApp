@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux'
 import DeviceInfo from 'react-native-device-info';
+import { showLocation } from 'react-native-map-link'
+
 
 
 
@@ -18,8 +20,9 @@ export default class Bantuan extends Component {
        initialPosition: 'unknown',
        lastPosition: 'unknown',
        longitude: null,
-       latitude: null
+       latitude: null,
     }
+    this.open = this.open.bind(this)
   }
 
   watchID: ?number = null;
@@ -55,13 +58,32 @@ export default class Bantuan extends Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
+  open() {
+    let { latitude, longitude } = this.state
+    console.log('tud: ', latitude);
+      if (latitude && longitude) {
+        showLocation({
+          latitude: {latitude},
+          longitude: {longitude},
+          title: 'Device Location'  // optional
+          // app: 'uber'  // optionally specify specific app to use
+        })
+      } else {
+        alert("Couldn't find coordinate")
+      }
+  }
 
   back() {
     Actions.pop()
   }
 
   render() {
-    let { latitude, longitude } = this.setState
+    let { latitude, longitude } = this.state
+
+    if (!latitude && !longitude) {
+      latitude = 'unknown'
+      longitude = 'unknown'
+    }
 
     return(
       <View style={{
@@ -79,7 +101,12 @@ export default class Bantuan extends Component {
           <Text>Model : {DeviceInfo.getModel()}</Text>
           <Text>OS : {DeviceInfo.getSystemName()}</Text>
           <Text>TimeZone : {DeviceInfo.getTimezone()}</Text>
-          <Text>Location : {latitude}, {longitude}</Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text>Location : </Text>
+            <TouchableOpacity onPress={this.open}>
+            <Text style={{textDecorationLine: 'underline', color:'rgb(16,156,245)'}}>{latitude}, {longitude}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <TouchableOpacity onPress={this.back} style={{marginTop: 50}}>
           <Text>Back</Text>
