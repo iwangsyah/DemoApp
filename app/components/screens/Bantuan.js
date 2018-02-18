@@ -50,10 +50,6 @@ export default class Bantuan extends Component {
      });
   }
 
-  componentDidUpdate(prevProps) {
-
-  }
-
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
   }
