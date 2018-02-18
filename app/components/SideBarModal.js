@@ -26,7 +26,7 @@ class SidebarModal extends Component {
     this.triggerDeveloperMenu = this.triggerDeveloperMenu.bind(this)
     this.gotoOfflineSyncStats = this.gotoOfflineSyncStats.bind(this)
     this.gotoLogs = this.gotoLogs.bind(this)
-    this.gotoEnvironmentSelection = this.gotoEnvironmentSelection.bind(this)
+    this.gotoBantuan = this.gotoBantuan.bind(this)
     this.gotoSyncManager = this.gotoSyncManager.bind(this)
     this.gotoAutoSyncSelection = this.gotoAutoSyncSelection.bind(this)
   }
@@ -61,8 +61,8 @@ class SidebarModal extends Component {
     this.props.hideModal()
   }
 
-  gotoEnvironmentSelection() {
-    Actions.environmentSelection()
+  gotoBantuan() {
+    Actions.bantuan()
     this.props.hideModal()
   }
 
@@ -129,7 +129,7 @@ class SidebarModal extends Component {
       )
 
       signInMenus.push(
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.gotoBantuan}>
             <View style={styles.titleContainer}>
               <Icon name="ios-help-buoy-outline" size={30} style={{top:5}}/>
               <Text style={[styles.menuModalItem, {marginLeft: 15}]}>Bantuan</Text>

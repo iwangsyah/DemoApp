@@ -10,9 +10,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal'
 import { connect } from 'react-redux'
 
-import { menuSetVisibility } from './actions/sidebar'
-import BackgroundImage from './components/BackgroundImage'
-import SideBarModal from './components/SidebarModal'
+import { menuSetVisibility } from '../../actions/sidebar'
+import BackgroundImage from '../BackgroundImage'
+import SideBarModal from '../SidebarModal'
 
 const myIcon = (<Icon name="bars" size={40} color="black" />)
 
