@@ -131,8 +131,8 @@ class SidebarModal extends Component {
       signInMenus.push(
           <TouchableOpacity onPress={this.gotoBantuan}>
             <View style={styles.titleContainer}>
-              <Icon name="ios-help-buoy-outline" size={30} style={{top:5}}/>
-              <Text style={[styles.menuModalItem, {marginLeft: 15}]}>Bantuan</Text>
+              <Icon name="ios-information-circle-outline" size={30} style={{top:5}}/>
+              <Text style={[styles.menuModalItem, {marginLeft: 15}]}>Device Info</Text>
             </View>
           </TouchableOpacity>
       )

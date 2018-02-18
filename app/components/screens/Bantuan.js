@@ -2,17 +2,67 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  Geolocation,
   TouchableOpacity
 } from 'react-native';
 import { Actions } from 'react-native-router-flux'
+import DeviceInfo from 'react-native-device-info';
+
+
 
 export default class Bantuan extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+       initialPosition: 'unknown',
+       lastPosition: 'unknown',
+       longitude: null,
+       latitude: null
+    }
+  }
+
+  watchID: ?number = null;
+
+  componentDidMount() {
+    let { inspection } = this.props
+    //get Location
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+           const initialPosition = JSON.stringify(position);
+           this.setState({ initialPosition: initialPosition });
+        },
+        (error) => console.log('error: ', error.message),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+     );
+     this.watchID = navigator.geolocation.watchPosition((position) => {
+        const lastPosition = JSON.stringify(position);
+        const longitude = JSON.stringify(position.coords.longitude);
+        const latitude = JSON.stringify(position.coords.latitude);
+        this.setState({
+          lastPosition: lastPosition,
+          longitude: longitude,
+          latitude: latitude,
+        });
+     });
+  }
+
+  componentDidUpdate(prevProps) {
+
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
 
   back() {
     Actions.pop()
   }
 
   render() {
+    let { latitude, longitude } = this.setState
+
     return(
       <View style={{
         flex: 1,
@@ -20,10 +70,22 @@ export default class Bantuan extends Component {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-        <TouchableOpacity onPress={this.back}>
+        <Text style={{marginBottom: 30, fontSize:25}}>DEVICE INFO</Text>
+        <View style={{alignItems: 'flex-start'}}>
+          <Text>Device Name : {DeviceInfo.getDeviceName()}</Text>
+          <Text>Serial Number : {DeviceInfo.getSerialNumber()}</Text>
+          <Text>Manufacture : {DeviceInfo.getManufacturer()}</Text>
+          <Text>Brand : {DeviceInfo.getBrand()}</Text>
+          <Text>Model : {DeviceInfo.getModel()}</Text>
+          <Text>OS : {DeviceInfo.getSystemName()}</Text>
+          <Text>TimeZone : {DeviceInfo.getTimezone()}</Text>
+          <Text>Location : {latitude}, {longitude}</Text>
+        </View>
+        <TouchableOpacity onPress={this.back} style={{marginTop: 50}}>
           <Text>Back</Text>
         </TouchableOpacity>
       </View>
     )
   }
+
 }
