@@ -60,7 +60,6 @@ export default class Bantuan extends Component {
 
   open() {
     let { latitude, longitude } = this.state
-    console.log('tud: ', latitude);
       if (latitude && longitude) {
         showLocation({
           latitude: {latitude},

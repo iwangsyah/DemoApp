@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 
 import { menuSetVisibility } from '../../actions/sidebar'
 import BackgroundImage from '../BackgroundImage'
-import SideBarModal from '../SidebarModal'
+import SideBarModal from '../SideBarModal'
 
 const myIcon = (<Icon name="bars" size={40} color="black" />)
 
