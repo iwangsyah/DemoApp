@@ -23,41 +23,12 @@ class SidebarModal extends Component {
       showDeveloperMenu: false,
     }
 
-    this.triggerDeveloperMenu = this.triggerDeveloperMenu.bind(this)
-    this.gotoOfflineSyncStats = this.gotoOfflineSyncStats.bind(this)
-    this.gotoLogs = this.gotoLogs.bind(this)
+    this.gotoHome = this.gotoHome.bind(this)
     this.gotoBantuan = this.gotoBantuan.bind(this)
-    this.gotoSyncManager = this.gotoSyncManager.bind(this)
-    this.gotoAutoSyncSelection = this.gotoAutoSyncSelection.bind(this)
   }
 
-  triggerDeveloperMenu() {
-    this.presses = this.presses || []
-    this.presses.push(Date.now())
-    if (this.presses.length > 7) {
-      this.presses = this.presses.slice(1, 8)
-    }
-    if (this.presses.length == 7 && this.presses[0] >= Date.now() - 30000) {
-      this.setState({ showDeveloperMenu: true })
-    }
-  }
-
-  gotoSyncManager() {
-    this.props.hideModal()
-  }
-
-  gotoAutoSyncSelection() {
-    this.props.hideModal()
-  }
-
-
-  gotoOfflineSyncStats() {
-    Actions.offlineSyncStats()
-    this.props.hideModal()
-  }
-
-  gotoLogs() {
-    Actions.logs()
+  gotoHome() {
+    Actions.home()
     this.props.hideModal()
   }
 
@@ -72,35 +43,9 @@ class SidebarModal extends Component {
     let reset = () => {
       this.props.hideModal()
     }
-    let developerMenus = []
-    if (showDeveloperMenu) {
-      developerMenus.push(
-        <TouchableOpacity
-          key='offlineSyncStats'
-          onPress={this.gotoOfflineSyncStats}
-        >
-          <Text style={styles.menuModalItem}>Offline Sync Stats</Text>
-        </TouchableOpacity>
-      )
-      developerMenus.push(
-        <TouchableOpacity
-          key='logs'
-          onPress={this.gotoLogs}
-        >
-          <Text style={styles.menuModalItem}>Logs</Text>
-        </TouchableOpacity>
-      )
-      developerMenus.push(
-        <TouchableOpacity
-          key='environmentSelection'
-          onPress={this.gotoEnvironmentSelection}
-        >
-          <Text style={styles.menuModalItem}>Environment</Text>
-        </TouchableOpacity>
-      )
-    }
 
     let signInMenus = []
+
       signInMenus.push(
         <TouchableOpacity onPress={this.gotoSyncManager}>
           <View style={styles.titleContainer}>
@@ -156,10 +101,6 @@ class SidebarModal extends Component {
         </Modal>
       </TouchableWithoutFeedback>
     )
-  }
-
-  test() {
-    console.log('dapet');
   }
 }
 
